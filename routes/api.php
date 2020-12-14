@@ -13,6 +13,6 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/', fn($router) => $router->app->version());
+
+$router->get('/api/v1', fn() => 'the Quiz REST API');
