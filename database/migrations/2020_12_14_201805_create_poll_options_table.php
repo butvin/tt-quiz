@@ -15,8 +15,9 @@ class CreatePollOptionsTable extends Migration
     {
         Schema::create('poll_options', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('poll_id');
-            $table->string('value', 128);
+            $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('poll_id')->nullable();
+            $table->string('name', 128);
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

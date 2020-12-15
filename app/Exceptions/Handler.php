@@ -17,10 +17,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        ValidationException::class,
+//        AuthorizationException::class,
+//        HttpException::class,
+//        ModelNotFoundException::class,
+//        ValidationException::class,
     ];
 
     /**
@@ -47,8 +47,27 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e)
     {
-        return parent::render($request, $exception);
+
+        if ($e instanceof ModelNotFoundException) {
+
+            $data = [
+                'origin_msg' => $e->getMessage(),
+                'origin_code' => $e->getCode(),
+                'model' => ($e->getModel()),
+                'ids' => ($e->getIds()),
+                'trace' => ($e->getTrace()),
+                'e' => ($e),
+                'called_from' => static::class,
+            ];
+
+            $msg = 'No result for ' . $data['ids'][0];
+
+            return response()->json($msg);
+        }
+
+        return parent::render($request, $e);
+
     }
 }

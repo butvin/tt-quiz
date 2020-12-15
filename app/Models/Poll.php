@@ -33,7 +33,12 @@ class Poll extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'subject', 'status', 'updated_at', 'created_at',
+        'subject', 'status',
+        'updated_at', 'created_at',
+    ];
+
+    protected $hidden = [
+        'deleted_at', 'status',
     ];
 
     /**

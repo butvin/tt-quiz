@@ -13,7 +13,17 @@
 |
 */
 
-$router->get('/', fn($router) => $router->app->version());
+$router->group(['prefix' => 'api/v1'],function ($router) {
+    $router->get(   'polls', 'PollController@getAll');
+    $router->get(   'polls/{id}', 'PollController@getPoll');
+    $router->post(  'polls', 'PollController@store');
+    $router->delete('polls/{id}', ['uses' => 'PollController@destroy']);
+    $router->put(   'polls/{id}', 'PollController@update');
+    $router->get(   'polls/{poll_id}/options', 'PollOptionController@getPollOptions');
+});
 
-//$router->get('/api/v1', fn() => 'the Quiz REST API');
-$router->get('/api/v1', 'PollController@index');
+$router->group(['middleware' => ['cors']], function($router) {
+    $router->get('/', fn($router) => $router->app->version());
+
+
+});
