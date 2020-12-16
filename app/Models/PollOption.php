@@ -8,7 +8,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Lumen\Auth\Authorizable;
+
+use App\Models\Poll;
+use App\Models\PollVote;
 
 class PollOption extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -27,7 +31,7 @@ class PollOption extends Model implements AuthenticatableContract, AuthorizableC
      * @var array
      */
     protected $fillable = [
-        'name', 'status',
+        'name',
         /* comment on prod */
         'poll_id',  'parent_id',
         'updated_at', 'created_at',
@@ -45,12 +49,22 @@ class PollOption extends Model implements AuthenticatableContract, AuthorizableC
     ];
 
     /**
-     * Relations with polls. Each poll has one poll_option
+     * Relations with polls. Each poll_option has one poll entity
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function poll(): BelongsTo
     {
         return $this->belongsTo(Poll::class, 'id', 'poll_id');
+    }
+
+    /**
+     * Every poll_option has one votes data
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function pollVote(): HasOne
+    {
+        return $this->hasOne(PollVote::class, 'poll_option_id', 'id');
     }
 }

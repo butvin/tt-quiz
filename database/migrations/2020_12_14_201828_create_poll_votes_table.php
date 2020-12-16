@@ -18,7 +18,6 @@ class CreatePollVotesTable extends Migration
             $table->unsignedInteger('poll_id');
             $table->unsignedInteger('poll_option_id');
             $table->bigInteger('vote_count');
-            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

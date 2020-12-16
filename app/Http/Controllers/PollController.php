@@ -22,16 +22,20 @@ class PollController extends Controller
 //        $this->middleware(CorsMiddleware::class);
     }
 
-//    public function index(int $id): JsonResponse
-//    {
-//        $data = $this->getPollOptions(Poll::findOrFail($id));
-//        return response()->json($data);
-//    }
+    /**
+     * @param  int  $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json('$data');
+    }
 
     /**
      * Get all polls
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getAll(): JsonResponse
     {
@@ -47,7 +51,7 @@ class PollController extends Controller
      *
      * @param  int  $id
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function getPoll(int $id): JsonResponse
     {
@@ -59,7 +63,7 @@ class PollController extends Controller
      *
      * @param  Request  $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -82,7 +86,7 @@ class PollController extends Controller
      * @param  int  $id
      * @param  Request  $request
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(int $id, Request $request): JsonResponse
     {
@@ -98,7 +102,7 @@ class PollController extends Controller
      *
      * @param  int  $id
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id): JsonResponse
     {

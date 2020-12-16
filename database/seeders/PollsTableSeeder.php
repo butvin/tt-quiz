@@ -16,7 +16,7 @@ class PollsTableSeeder extends Seeder
     public function run(): void
     {
         Poll::factory()
-            ->times(15)
+            ->times(7)
             ->create();
     }
 }

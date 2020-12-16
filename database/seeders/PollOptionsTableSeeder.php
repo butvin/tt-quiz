@@ -17,7 +17,7 @@ class PollOptionsTableSeeder extends Seeder
     public function run(): void
     {
         PollOption::factory()
-            ->times(50)
+            ->times(44)
             ->create();
     }
 }

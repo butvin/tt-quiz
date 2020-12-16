@@ -23,7 +23,7 @@ class PollFactory extends Factory
     public function definition(): array
     {
         return [
-            'subject' => $this->faker->text(128),
+            'subject' => $this->faker->text(12),
             'status' => $this->faker->boolean,
         ];
     }
