@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CorsMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-//use App\Http\Middleware\CorsMiddleware;
-use App\Models\{
-    Poll, PollOption, PollVote
-};
+use App\Models\Poll;
 
 
 class PollController extends Controller
@@ -19,17 +17,17 @@ class PollController extends Controller
      */
     public function __construct(Request $request)
     {
-//        $this->middleware(CorsMiddleware::class);
+        $this->middleware(CorsMiddleware::class);
     }
 
     /**
-     * @param  int  $id
+     * Index
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
     {
-        return response()->json('$data');
+        return response()->json('index action scope');
     }
 
     /**
@@ -37,17 +35,17 @@ class PollController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAll(): JsonResponse
+    public function getAllPolls(): JsonResponse
     {
         $polls = Poll::all();
 
         return ($polls->count() > 0) ?
             response()->json($polls) :
-            response()->json('There are no polls', 404);
+            response()->json(['message' => 'no questions'], 204);
     }
 
     /**
-     * Get specific pall by id
+     * Get pall by id
      *
      * @param  int  $id
      *
@@ -59,7 +57,7 @@ class PollController extends Controller
     }
 
     /**
-     * Create a poll record
+     * Create a poll
      *
      * @param  Request  $request
      *
@@ -67,17 +65,21 @@ class PollController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function storePoll(Request $request): JsonResponse
     {
-        $this->validate($request, [
-            'subject' => 'required|string|min:6'
-        ]);
+        $validator = $this->validate($request, ['subject' => 'required|string|min:3']);
 
-        $poll = Poll::create($request->only('subject'));
+        if (!$validator) {
+            return response()->json(['message' => 'failed'], 400);
+        }
 
-        return $poll ?
-            response()->json(['message' => 'Created Successfully', 201]) :
-            response()->json(['message' => 'failed', 422]);
+        try {
+            $poll = Poll::create($request->only('subject'));
+
+            return response()->json($poll, 201);
+        } catch (\Exception $e ) {
+            return response()->json(['message' => 'failed'], 204);
+        }
     }
 
     /**
@@ -88,13 +90,17 @@ class PollController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(int $id, Request $request): JsonResponse
+    public function updatePoll(int $id, Request $request): JsonResponse
     {
         $poll = Poll::findOrFail($id);
 
-        $poll->update($request->all());
+        try {
+            $poll->update($request->all());
 
-        return response()->json('Deleted Successfully');
+            return response()->json('Updated Successfully');
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'failed', 204]);
+        }
     }
 
     /**
@@ -104,10 +110,9 @@ class PollController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id): JsonResponse
+    public function destroyPoll(int $id): JsonResponse
     {
         $poll = Poll::findOrFail($id);
-        $poll->status = 0;
         $poll->delete();
 
         return response()->json('Deleted Successfully');

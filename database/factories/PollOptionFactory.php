@@ -26,7 +26,7 @@ class PollOptionFactory extends Factory
     {
         return [
             'parent_id' => null,
-            'poll_id' => random_int(1, 15),
+            'poll_id' => random_int(1, 7),
             'name' => $this->faker->text(16),
             'created_at' => $this->faker->dateTime,
             'updated_at' => $this->faker->dateTime,

@@ -11,9 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Lumen\Auth\Authorizable;
 
-use App\Models\Poll;
-use App\Models\PollVote;
-
 class PollOption extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
@@ -31,10 +28,7 @@ class PollOption extends Model implements AuthenticatableContract, AuthorizableC
      * @var array
      */
     protected $fillable = [
-        'name',
-        /* comment on prod */
-        'poll_id',  'parent_id',
-        'updated_at', 'created_at',
+        'name', 'poll_id', 'parent_id',
     ];
 
     /**
@@ -42,11 +36,7 @@ class PollOption extends Model implements AuthenticatableContract, AuthorizableC
      *
      * @var array
      */
-    protected $hidden = [
-        'updated_at', 'status', 'created_at',
-        /* uncomment on prod */
-        /*'deleted_at', */
-    ];
+    protected $hidden = [];
 
     /**
      * Relations with polls. Each poll_option has one poll entity
@@ -66,5 +56,15 @@ class PollOption extends Model implements AuthenticatableContract, AuthorizableC
     public function pollVote(): HasOne
     {
         return $this->hasOne(PollVote::class, 'poll_option_id', 'id');
+    }
+
+    /**
+     * Check for sub-options in options scope
+     *
+     * @return bool
+     */
+    public function hasSubOptions(): bool
+    {
+        return $this->attributes['parent_id'] === null;
     }
 }

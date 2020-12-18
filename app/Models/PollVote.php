@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
 use Laravel\Lumen\Auth\Authorizable;
 
-use App\Models\Poll;
-use App\Models\PollOption;
 
 class PollVote extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -34,11 +30,9 @@ class PollVote extends Model implements AuthenticatableContract, AuthorizableCon
      */
     protected $fillable = [
         'poll_id', 'poll_option_id', 'vote_count',
-        //'updated_at', 'created_at',
     ];
 
     protected $hidden = [
-        // uncomment on prod
         'updated_at', 'created_at',
     ];
 

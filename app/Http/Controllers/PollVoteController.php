@@ -14,5 +14,8 @@ class PollVoteController extends Controller
         //
     }
 
-    //
+    public function vote(): bool
+    {
+        return true;
+    }
 }

@@ -9,11 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Lumen\Auth\Authorizable;
-
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-use App\Models\PollOption;
-use App\Models\PollVote;
 
 
 class Poll extends Model implements AuthenticatableContract, AuthorizableContract
@@ -34,19 +30,17 @@ class Poll extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $fillable = [
         'subject', 'status',
-        'updated_at', 'created_at',
     ];
 
-    protected $hidden = [
-        'deleted_at', 'status',
-    ];
+    protected $hidden = [];
 
     /**
-     * Define the primary key
-     *
-     * @var string
+     * @var string[]
      */
-    protected $primaryKey = 'id';
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:00:00',
+        'updated_at' => 'timestamp',
+    ];
 
     /**
      * Options are associated with the specific poll

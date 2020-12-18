@@ -12,21 +12,31 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 $router->get('/', fn() => $router->app->version());
 
 $router->group(['prefix' => 'api/v1', 'middleware' => ['cors']],function ($router) {
-
-    $router->get(   '/',            ['uses' => 'PollController@index']);
-    $router->get(   'polls',        ['uses' => 'PollController@getAll']);
+    $router->get('/', 'PollController@index');
+    // CRUD: start point
+    $router->get(   'polls',        ['uses' => 'PollController@getAllPolls']);
     $router->get(   'polls/{id}',   ['uses' => 'PollController@getPoll']);
-    $router->post(  'polls',        ['uses' => 'PollController@store']);
-    $router->delete('polls/{id}',   ['uses' => 'PollController@destroy']);
-    $router->put(   'polls/{id}',   ['uses' => 'PollController@update']);
+    $router->post(  'polls',        ['uses' => 'PollController@storePoll']);
+    $router->delete('polls/{id}',   ['uses' => 'PollController@destroyPoll']);
+    $router->put(   'polls/{id}',   ['uses' => 'PollController@updatePoll']);
 
-    $router->get(   'polls/{poll_id}/options',
-        ['uses' => 'PollOptionController@getPollOptions']);
+    // sub-questions list
+    $router->get('polls/{id}/options',
+        [
+            'uses' => 'PollOptionController@getPollOptions',
+            'as' => 'poll.answers',
+        ]
+    );
+
+    // sub-questions list
+    $router->get('polls/{id}/options/{option_id}/sub',
+        [
+            'uses' => 'PollOptionController@getPollSubOptions',
+            'as' => 'poll.sub.answers',
+        ]
+    );
 });
-
-//$router->group(['middleware' => ['cors']], function($router) {
-//$router->get('/', fn($router) => $router->app->version());
-//});
