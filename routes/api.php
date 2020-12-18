@@ -27,15 +27,23 @@ $router->group(['prefix' => 'api/v1', 'middleware' => ['cors']],function ($route
     // sub-questions list
     $router->get('polls/{id}/options',
         [
-            'uses' => 'PollOptionController@getPollOptions',
+            'uses' => 'PollOptionController@getAllOptions',
             'as' => 'poll.answers',
+        ]
+    );
+
+    // sub-questions list
+    $router->get('polls/{id}/options/{option_id}',
+        [
+            'uses' => 'PollOptionController@getOption',
+            'as' => 'poll.answer',
         ]
     );
 
     // sub-questions list
     $router->get('polls/{id}/options/{option_id}/sub',
         [
-            'uses' => 'PollOptionController@getPollSubOptions',
+            'uses' => 'PollOptionController@getSubOptions',
             'as' => 'poll.sub.answers',
         ]
     );

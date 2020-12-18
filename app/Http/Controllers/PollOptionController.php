@@ -28,12 +28,25 @@ class PollOptionController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getPollOptions(Request $request): JsonResponse
+    public function getAllOptions(Request $request): JsonResponse
     {
         $poll_id = $request->route(('id'));
         $options = Poll::findOrFail($poll_id)->pollOptions;
 
         return response()->json($options);
+    }
+
+    /**
+     * Get poll option
+     *
+     * @param  int  $option_id
+     * @param  Request  $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOption(int $option_id, Request $request): JsonResponse
+    {
+        return response()->json(Poll::findOrFail($option_id));
     }
 
     /**
@@ -43,7 +56,7 @@ class PollOptionController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getPollSubOptions(int $option_id): JsonResponse
+    public function getSubOptions(int $option_id): JsonResponse
     {
         $subOptions = PollOption::where('parent_id', $option_id)->get();
 
