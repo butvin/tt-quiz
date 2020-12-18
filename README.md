@@ -11,6 +11,8 @@ REST Quiz API - 0.2.0
 
 GET:    /
 
+Start point to the Application
+
 
 GET:    /api/v1
 
