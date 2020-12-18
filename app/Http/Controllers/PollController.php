@@ -6,6 +6,7 @@ use App\Http\Middleware\CorsMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Poll;
+use Illuminate\Support\Facades\App;
 
 
 class PollController extends Controller
@@ -27,7 +28,13 @@ class PollController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json('index action scope');
+        $data = [
+            'framework' => App::version(),
+            'name' => 'REST Quiz API',
+            'protocol' => 'HTTP',
+        ];
+
+        return response()->json($data);
     }
 
     /**

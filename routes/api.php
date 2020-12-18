@@ -24,7 +24,7 @@ $router->group(['prefix' => 'api/v1', 'middleware' => ['cors']],function ($route
     $router->delete('polls/{id}',   ['uses' => 'PollController@destroyPoll']);
     $router->put(   'polls/{id}',   ['uses' => 'PollController@updatePoll']);
 
-    // sub-questions list
+    // One poll options list
     $router->get('polls/{id}/options',
         [
             'uses' => 'PollOptionController@getAllOptions',

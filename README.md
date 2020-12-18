@@ -5,34 +5,54 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
 [![License](https://img.shields.io/packagist/l/laravel/framework)](https://packagist.org/packages/laravel/lumen-framework)
 
-REST Quiz API - 0.2.0
+# REST Quiz API - 0.2.0
 
-## Allowed routes
+#### HTTP Domain
 
-GET:    /
+###### Allowed routes
+
+### GET:    /
 
 Start point to the Application
 
-
-GET:    /api/v1
-
-
-GET:    /api/v1/polls
+### GET:    /api/v1
 
 
-POST:    /api/v1/polls
+Start point to the Application API
 
+### GET:    /api/v1/polls
 
-GET:    /api/v1/polls/{id}
+Get all polls/question/quizzes etc.
 
+### POST:    /api/v1/polls
 
-PUT:    /api/v1/polls/{id}
+Create a new poll
 
+### GET:    /api/v1/polls/{id}
 
-PUT:    /api/v1/polls/{id}
+Get poll by id
 
+### PUT:    /api/v1/polls/{id}
 
-GET:    /api/v1/polls/{id}/options/{option_id}
+Update poll by id
 
+### DELETE: /api/v1/polls/{id}
 
-GET:    /api/v1/polls/{id}/options/{option_id}/sub
+Delete poll by id
+
+### GET:    /api/v1/polls/{id}/options
+
+One poll options list
+
+### GET:    /api/v1/polls/{id}/options/{option_id}
+
+Get one sub-option from options list
+
+### GET:    /api/v1/polls/{id}/options/{option_id}/sub
+
+Sub-option list
+
+**Query parameters:**
+
+_integer_ **id**, **option_id**
+Entity ids
