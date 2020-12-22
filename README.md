@@ -1,6 +1,9 @@
 # REST Quiz API - 0.2.0
 
 #### Lumen PHP Framework
+### Run the App:
+> php artisan migrate:fresh --seed && php -S localhost:8080 -t public
+
 #### HTTP Domain
 #### Allowed Methods
 
